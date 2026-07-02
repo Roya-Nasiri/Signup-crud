@@ -39,14 +39,6 @@ Demo : https://roya-nasiri.github.io/Signup-crud/
 
 ---
 
-## 📷 Preview
-
-<img width="100%" alt="Project Preview" src="preview.png">
-
-> Replace **preview.png** with your project screenshot.
-
----
-
 ## 📂 Project Structure
 
 ```
