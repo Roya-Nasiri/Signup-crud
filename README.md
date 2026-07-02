@@ -3,7 +3,7 @@
 A responsive authentication system built with **HTML**, **CSS (Tailwind CSS)** and **Vanilla JavaScript**. This project demonstrates a complete user authentication workflow using **MockAPI** as a fake REST API.
 
 Demo : https://roya-nasiri.github.io/Signup-crud/
-![Project Demo](src/img/my(2).gif)
+![Project Demo](src/img/my (2).gif)
 
 ## ✨ Features
 
