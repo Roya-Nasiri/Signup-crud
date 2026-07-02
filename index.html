@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>sign up</title>
+    <link rel="stylesheet" href="./src/stylesheet/out.css" />
+    <style>
+      
+      body {
+        /* background: linear-gradient(
+          135deg,
+          #667eea 0%,
+          #764ba2 100%
+        ) !important; */
+        background-color: #6177d9;
+      }
+      .box {
+        background: rgba(255, 255, 255, 0.2) !important;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+      }
+      .out {
+        display: none;
+      }
+      .log {
+        display: none;
+      }
+      .remember {
+        display: none;
+      }
+      .pop {
+        z-index: 20;
+        display: none;
+        width: 25%;
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        padding: 20px;
+        background-color: white;
+        > input {
+          display: block;
+          width: 90%;
+          height: 50px;
+          margin: 10px;
+        }
+        > button {
+          display: block;
+          width: 30%;
+          margin: 10px auto;
+        }
+      }
+      table {
+        border-collapse: collapse;
+        margin: 40px auto;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        border-radius: 12px;
+        overflow: hidden;
+        direction: ltr;
+        background-color: rgba(198, 181, 249, 0.587);
+        display: flex;
+      }
+      tr {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      td {
+        padding: 10px 60px;
+        border: none;
+        border-bottom: 1px solid #f0f0f0c1;
+        font-size: 18px;
+        color: #333;
+        text-align: center;
+        min-width: 150px;
+      }
+      td:first-child {
+        border-left: none;
+      }
+      td img {
+        width: 150px;
+        height: 150px;
+        border-radius: 10px;
+        display: block;
+        margin: 10px auto;
+      }
+      td:nth-last-child(2) {
+        cursor: pointer;
+        color: rgb(57, 13, 57);
+        font-weight: 500;
+        transition: background 0.2s;
+      }
+      td:nth-last-child(2):hover {
+        font-weight: bold;
+      }
+      td:last-child {
+        cursor: pointer;
+        color: #e53935;
+        font-weight: 500;
+        transition: background 0.2s;
+        border-bottom: none;
+      }
+      td:last-child:hover {
+        font-weight: bold;
+      }
+      .confirm {
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body class="min-h-screen flex flex-col items-center justify-center p-4">
+    <div
+      id="overlay"
+      style="
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(30, 30, 30, 0.5);
+        z-index: 10;
+      "
+    ></div>
+
+    <div
+      id="errorMsg"
+      class="hidden text-red-500 text-sm text-center px-2 text-[18px] bg-white/20 backdrop-blur-lg py-2 rounded-lg fixed top-10 left-1/2 -translate-x-1/2 z-50"
+    ></div>
+
+    <!-- فرم -->
+    <div
+      class="box z-50 bg-white/20 backdrop-blur-xl rounded-2xl shadow-md w-full max-w-sm p-5 flex flex-col gap-y-2 relative"
+    >
+      <h2 class="text-2xl font-semibold text-purple-950 text-center py-3">
+        Create Account
+      </h2>
+      <input
+        type="text"
+        placeholder="Email"
+        class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 text-white focus:ring-blue-200"
+      />
+      <input
+        type="text"
+        placeholder="Phone"
+        class="w-full text-white border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-200"
+      />
+      <input
+        type="password"
+        placeholder="Password"
+        class="w-full text-white border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-200"
+      />
+      <div class="remember flex items-center gap-2 text-sm">
+        <input type="checkbox" id="a" class="accent-blue-500" />
+        <label for="a" class="text-purple-950">Remember me</label>
+      </div>
+     
+<button id="registerBtn" class="reg w-full bg-purple-950 hover:bg-indigo-900 text-white font-medium py-3 rounded-lg transition">Sign up</button>
+      <button
+        onclick="login()"
+        class="log w-full border bg-purple-950 hover:bg-indigo-900 text-white font-medium py-3 rounded-lg transition"
+      >
+        Sign in
+      </button>
+      <h3
+        class="confirm text-center text-sm text-purple-950 hover:underline cursor-pointer mt-2"
+        onclick="openLogin()"
+      >
+        Already have an account? Sign in
+      </h3>
+      <h3
+        class="confirmSignup hidden text-center text-sm text-purple-950 hover:underline cursor-pointer mt-2"
+        onclick="openSignup()"
+      >
+        New here? Sign up
+      </h3>
+    </div>
+
+    <!-- بعد از login اینا نشون داده میشن -->
+    <div class="logout flex flex-col items-center gap-4 mt-6">
+      <h3 class="text-lg font-medium text-white"></h3>
+      <!-- جدول اینجا append میشه -->
+      <button
+        onclick="logout()"
+        class="out bg-purple-400 hover:bg-red-500 cursor-pointer text-purple-950 font-medium py-2 px-6 rounded-lg transition"
+      >
+        Sign out
+      </button>
+    </div>
+
+    <!-- pop ادیت -->
+    <div class="pop rounded-xl p-6 flex flex-col gap-3">
+      <input
+        type="text"
+        placeholder="New Email"
+        class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+      />
+      <input
+        type="text"
+        placeholder="New Phone"
+        class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+      />
+      <input
+        type="text"
+        placeholder="New Password"
+        class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+      />
+      <button
+        id="saveBtn"
+        class="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 rounded-lg transition"
+      >
+        Save
+      </button>
+    </div>
+    
+    <!-- /////////my pic//////// -->
+<div class="myPic w-full max-w-[420px] rounded-[35px] bg-black/10 backdrop-blur-xl border border-white/20 shadow-2xl overflow-hidden flex sm:flex-row fixed bottom-1/12 left-1/2 -translate-x-1/2">
+    <!-- Image -->
+  
+<div class="p-3 flex justify-center w-1/2">
+    <img
+      src="./src/img/my.jpg"
+      class="w-[120px] h-[120px] object-cover rounded-full"
+      alt=""
+    />
+  </div>
+
+  <!-- Content -->
+ <div class="text-center sm:text-left py-3 px-4 flex flex-col justify-center">
+    <h1 class="text-white text-2xl font-semibold">Roya Nasiri</h1>
+    <p class="text-gray-300 mt-1 text-base">Front-End Developer</p>
+
+    <!-- Social -->
+    <div class="flex justify-center sm:justify-start items-center gap-3 mt-4">
+      <a
+        href="https://www.linkedin.com/in/roya-nasiri-81466123a"
+        class="w-9 h-9 rounded-full bg-[#0A66C2] flex items-center justify-center text-white hover:scale-110 duration-300"
+      >
+        <svg width="32" height="32" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20.82 1.5H3.294c-.957 0-1.794.69-1.794 1.635v17.566c0 .951.837 1.799 1.794 1.799h17.521c.963 0 1.685-.854 1.685-1.8V3.136c.006-.946-.722-1.635-1.68-1.635ZM8.01 19.005H5V9.65h3.01v9.354ZM6.61 8.228h-.022c-.963 0-1.586-.716-1.586-1.613C5.002 5.7 5.642 5 6.626 5c.984 0 1.587.695 1.608 1.614 0 .897-.624 1.613-1.625 1.613Zm12.395 10.777h-3.009V13.89c0-1.225-.438-2.063-1.526-2.063-.832 0-1.324.563-1.543 1.111-.082.197-.104.465-.104.739v5.328H9.815V9.65h3.008v1.301c.438-.623 1.122-1.52 2.713-1.52 1.975 0 3.469 1.301 3.469 4.108v5.465Z"></path>
+        </svg>
+      </a>
+      <a
+        href="https://github.com/Roya-Nasiri"
+        class="w-9 h-9 rounded-full bg-black flex items-center justify-center text-white hover:scale-110 duration-300"
+      >
+        <svg width="32" height="32" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" d="M11.964 0A11.965 11.965 0 0 0 0 11.964c0 5.283 3.45 9.76 8.146 11.376.588.073.807-.294.807-.588v-2.055c-3.301.735-4.034-1.614-4.034-1.614-.515-1.395-1.322-1.762-1.322-1.762-1.101-.734.072-.734.072-.734 1.174.073 1.836 1.248 1.836 1.248 1.101 1.834 2.788 1.32 3.45 1.027.072-.806.44-1.32.733-1.613-2.643-.294-5.431-1.322-5.431-5.946 0-1.32.44-2.35 1.248-3.23-.075-.22-.514-1.467.147-3.083 0 0 1.027-.293 3.301 1.248.955-.294 1.984-.367 3.011-.367 1.027 0 2.055.147 3.009.367 2.275-1.54 3.303-1.248 3.303-1.248.66 1.616.219 2.862.146 3.156a4.74 4.74 0 0 1 1.247 3.23c0 4.624-2.79 5.579-5.43 5.873.44.366.807 1.099.807 2.2v3.303c0 .294.22.66.808.588A11.976 11.976 0 0 0 24 11.964C23.927 5.358 18.57 0 11.964 0Z" clip-rule="evenodd"></path>
+        </svg>
+      </a>
+      <a
+        href="#"
+        class="w-9 h-9 rounded-full bg-gradient-to-br from-yellow-400 via-pink-500 to-purple-600 flex items-center justify-center text-white hover:scale-110 duration-300"
+      >
+        <svg width="32" height="32" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" d="M7.465 1.066C8.638 1.012 9.012 1 12 1c2.988 0 3.362.013 4.534.066 1.172.053 1.972.24 2.672.511.733.277 1.398.71 1.948 1.27.56.549.992 1.213 1.268 1.947.272.7.458 1.5.512 2.67C22.988 8.639 23 9.013 23 12c0 2.988-.013 3.362-.066 4.535-.053 1.17-.24 1.97-.512 2.67a5.396 5.396 0 0 1-1.268 1.949c-.55.56-1.215.992-1.948 1.268-.7.272-1.5.458-2.67.512-1.174.054-1.548.066-4.536.066-2.988 0-3.362-.013-4.535-.066-1.17-.053-1.97-.24-2.67-.512a5.397 5.397 0 0 1-1.949-1.268 5.392 5.392 0 0 1-1.269-1.948c-.271-.7-.457-1.5-.511-2.67C1.012 15.361 1 14.987 1 12c0-2.988.013-3.362.066-4.534.053-1.172.24-1.972.511-2.672a5.396 5.396 0 0 1 1.27-1.948 5.392 5.392 0 0 1 1.947-1.269c.7-.271 1.5-.457 2.67-.511zm8.98 1.98c-1.16-.053-1.508-.064-4.445-.064-2.937 0-3.285.011-4.445.064-1.073.049-1.655.228-2.043.379-.513.2-.88.437-1.265.822a3.412 3.412 0 0 0-.822 1.265c-.151.388-.33.97-.379 2.043-.053 1.16-.064 1.508-.064 4.445 0 2.937.011 3.285.064 4.445.049 1.073.228 1.655.379 2.043.176.477.457.91.822 1.265.355.365.788.646 1.265.822.388.151.97.33 2.043.379 1.16.053 1.507.064 4.445.064 2.938 0 3.285-.011 4.445-.064 1.073-.049 1.655-.228 2.043-.379.513-.2.88-.437 1.265-.822.365-.355.646-.788.822-1.265.151-.388.33-.97.379-2.043.053-1.16.064-1.508.064-4.445 0-2.937-.011-3.285-.064-4.445-.049-1.073-.228-1.655-.379-2.043-.2-.513-.437-.88-.822-1.265a3.413 3.413 0 0 0-1.265-.822c-.388-.151-.97-.33-2.043-.379zm-5.85 12.345a3.669 3.669 0 0 0 4-5.986 3.67 3.67 0 1 0-4 5.986zM8.002 8.002a5.654 5.654 0 1 1 7.996 7.996 5.654 5.654 0 0 1-7.996-7.996zm10.906-.814a1.337 1.337 0 1 0-1.89-1.89 1.337 1.337 0 0 0 1.89 1.89z" clip-rule="evenodd"></path>
+        </svg>
+      </a>
+    </div>
+  </div>
+</div>
+    
+
+    <script src="src/js/app.js"></script>
+  </body>
+</html>
