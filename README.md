@@ -51,25 +51,6 @@ Demo : https://roya-nasiri.github.io/Signup-crud/
 │   └── stylesheet
 ├── index.html
 └── README.md
-```
-
----
-
-## 🚀 Getting Started
-
-Clone the repository:
-
-```bash
-git clone https://github.com/Roya-Nasiri/Signup-crud.git
-```
-
-Open the project:
-
-```bash
-cd Signup-crud
-```
-
-Then simply open **index.html** in your browser.
 
 ---
 
